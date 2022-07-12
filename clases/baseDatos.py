@@ -9,3 +9,5 @@ class BaseDatos:
             database="mydb"
         )
         self.cursor = self.conexion.cursor()
+    def commit(self):
+        self.conexion.commit()

@@ -13,8 +13,8 @@ class Venta(BaseDatos):
     def appendProduct(self,Producto):
         self.__productos.append(Product)
     def asignarDocumento(self, Documento):
-
+        pass
     def mostrarBoleta(self):
-    
+        pass
     def mostrarFactura(self):
-    
+        pass
