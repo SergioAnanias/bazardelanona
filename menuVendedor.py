@@ -45,16 +45,24 @@ def menuVendedor(empleado):
                 elif(confirmacion== 2):
                     menuVendedor(empleado)
             elif(tipoDocumento==2):
+                venta.setDocumento(tipoDocumento)
                 razonSocial = input('Ingrese la razon social de la empresa\n')
                 rutCliente = input('Ingrese el rut de la empresa\n')
                 giro = input('Ingrese el giro de la empresa\n')
                 direccion = input('Ingrese la dirección de la empresa\n')
                 venta.setDatosFactura(razonSocial, rutCliente, giro,direccion)
+                venta.guardarVenta()
                 venta.mostrarFactura()
+                confirmacion = int(input('Desea cerrar la venta?\n 1 = Si\n 2 = No\n'))
+                if(confirmacion==1):
+                    venta.guardarVenta()
+                    menuVendedor(empleado)
+                elif(confirmacion== 2):
+                    menuVendedor(empleado)
             elif(tipoDocumento == 0):
                 menuVendedor(empleado)
             else:
                 print('Valor no valido')
-    else:
-        print('No existe un día abierto para realizar venta, consulte con su jefe de ventas')
-        
+        else:
+            print('No existe un día abierto para realizar venta, consulte con su jefe de ventas')
+            return False

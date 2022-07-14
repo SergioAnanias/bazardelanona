@@ -19,7 +19,7 @@ class Empleado():
         password = str(contraseña)
         pw =  bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
         today = datetime.now()
-        sql = f"insert into empleado (idEmpleado, nombreEmpleado, contraseña, date_creation, date_update, idCargo, firstLogin) values ({idEmpleado}, '{nombreEmpleado}','{pw}', '{today}','{today}',{cargo}, true);"
+        sql = f"insert into empleado (idEmpleado, nombreEmpleado, contraseña, date_creation, date_update, idCargo, firstLogin, status) values ({idEmpleado}, '{nombreEmpleado}','{pw}', '{today}','{today}',{cargo}, true, 'A');"
         __bd = BaseDatos()
         __bd.cursor.execute(sql)
         __bd.commit()
@@ -59,7 +59,7 @@ class Empleado():
             return True
         return False
     @staticmethod
-    def getUser(self, idEmpleado):
+    def getUser(idEmpleado):
         __bd = BaseDatos()
         sql = f"SELECT * FROM empleado where idEmpleado = {idEmpleado}"
         __bd.cursor.execute(sql)

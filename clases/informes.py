@@ -1,11 +1,11 @@
 from tabulate import tabulate
-from baseDatos import BaseDatos
+from clases.baseDatos import BaseDatos
 
 class Informes():
     @staticmethod
     def getInformesBoletaByDate(date):
         __bd = BaseDatos()
-        sql = f'''select idEmpleado, nombreEmpleado, SUM(valorNeto) as 'Total Valor Neto', sum(valorBruto) as 'Total Valor Bruto', valorBruto-valorNeto as 'IVA', COUNT(idVenta) as 'Ventas con Boleta' from venta
+        sql = f'''select idEmpleado, nombreEmpleado, SUM(valorNeto) as 'Total Valor Neto', sum(valorBruto) as 'Total Valor Bruto', SUM(valorBruto-valorNeto) as 'IVA', COUNT(idVenta) as 'Ventas con Boleta' from venta
         inner join empleado
         on empleado.idEmpleado = venta.idVendedor
         where idTipoDocumento=1 
@@ -33,12 +33,11 @@ class Informes():
     @staticmethod
     def getInformesBoletaByUser(idEmpleado):
         __bd = BaseDatos()
-        sql = f'''select idEmpleado, nombreEmpleado, SUM(valorNeto) as 'Total Valor Neto', sum(valorBruto) as 'Total Valor Bruto', valorBruto-valorNeto as 'IVA', COUNT(idVenta) as 'Ventas con Boleta' from venta
+        sql = f'''select idEmpleado, nombreEmpleado, valorNeto as 'Total Valor Neto',valorBruto as 'Total Valor Bruto', valorBruto-valorNeto as 'IVA'  from venta
         inner join empleado
         on empleado.idEmpleado = venta.idVendedor
         where idTipoDocumento=1 
         and empleado.idEmpleado ={idEmpleado}
-        group by empleado.idEmpleado;
         '''
         __bd.cursor.execute(sql)
         boletas = __bd.cursor.fetchall()
@@ -49,8 +48,8 @@ class Informes():
         sql = f'''select idEmpleado, nombreEmpleado, venta.valorNeto as 'Total Valor Neto', valorBruto as 'Total Valor Bruto', valorBruto-valorNeto as 'IVA' from venta
         inner join empleado
         on empleado.idEmpleado = venta.idVendedor
-        where idTipoDocumento=
-        and venta.date_creation between "{date} 00:00:00" AND "{date} 23:59:59";
+        where idTipoDocumento=2
+        and empleado.idEmpleado = {idEmpleado}
         '''
         __bd.cursor.execute(sql)
         boletas = __bd.cursor.fetchall()

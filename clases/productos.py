@@ -3,7 +3,8 @@ from datetime import datetime
 from tabulate import tabulate
 
 class Product():
-    def __init__(self, sku, descProducto, precioUnitario, cantidad = 0):
+    def __init__(self, sku, descProducto, precioUnitario, cantidad = 0, id=0):
+        self.__id=id
         self.__sku = sku
         self.__descProducto = descProducto
         self.__precioUnitario = precioUnitario
@@ -38,7 +39,7 @@ class Product():
         if(len(producto)>0):
             fields = [field[0] for field in __bd.cursor.description]
             producto = dict(zip(fields,producto[0]))
-            return Product(producto['SKU'], producto['descProducto'], producto['precioUnitario'], cantidad)
+            return Product(producto['SKU'], producto['descProducto'], producto['precioUnitario'], cantidad,producto['idProducto'])
         else:
             print("no se ha encontrado nada")
             return False

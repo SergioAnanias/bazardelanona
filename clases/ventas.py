@@ -69,8 +69,10 @@ class Venta(BaseDatos):
         sqlVenta = f"INSERT INTO venta (idVenta, idVendedor, valorNeto, valorBruto, date_creation, date_update, idTipoDocumento, idDia) values ({self.__idVenta},{self.__vendedor},{self.__valorNeto}, {self.__valorBruto}, NOW(), NOW(), {self.__idTipoDocumento}, {self.__idDia})"
         __bd.cursor.execute(sqlVenta)
         for producto in self.__productos:
+            print(producto)
             valorNeto = producto['_Product__precioUnitario'] * producto['_Product__cantidad']
             valorTotal = valorNeto*1.19
-            sqlDetalle = f"INSERT INTO detalleventa (cantidadProducto, valorNeto, valorTotal, date_creation, date_update, idProducto, idVenta) values ({producto['_Product__cantidad']},{valorNeto}, {valorTotal}, NOW(), NOW(), {producto['_Product__idProducto']}, {self.__idVenta})"
+            sqlDetalle = f"INSERT INTO detalleventa (cantidadProducto, valorNeto, valorTotal, date_creation, date_update, idProducto, idVenta) values ({producto['_Product__cantidad']},{valorNeto}, {valorTotal}, NOW(), NOW(), {producto['_Product__id']}, {self.__idVenta})"
             __bd.cursor.execute(sqlDetalle)
         __bd.commit()
+    
